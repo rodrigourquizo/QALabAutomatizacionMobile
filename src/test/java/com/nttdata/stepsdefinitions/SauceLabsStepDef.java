@@ -1,8 +1,10 @@
 package com.nttdata.stepsdefinitions;
 
 import com.nttdata.steps.SuaceLabsLoginSteps;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 
@@ -10,37 +12,28 @@ public class SauceLabsStepDef {
     @Steps
     SuaceLabsLoginSteps login;
 
-    @When("ingreso el usuario {string}")
-    public void ingresoElUsuario(String usuario) {
-        login.ingresoElUsuario(usuario);
-    }
-
-    @Given("ingreso al aplicativo de SauceLabs")
-    public void ingresoAlAplicativoDeSauceLabs() {
-    }
-
-    @When("inicio sesión con mi usuario {string} y clave {string}")
-    public void inicioSesiónConMiUsuarioYClave(String arg0, String arg1) {
-        login.ingresoElUsuario(arg0);
-        login.ingresarClave(arg1);
-        login.ingresar();
+    //prueba automation web
+    @Given("estoy en la aplicación de SauceLabs")
+    public void estoyEnLaAplicaciónDeSauceLabs() {
 
     }
 
-
-
-    @And("ingreso la clave {string}")
-    public void ingresoLaClave(String arg0) {
-        login.ingresarClave(arg0);
+    @And("valido que carguen correctamente los productos en la galeria")
+    public void validoQueCarguenCorrectamenteLosProductosEnLaGaleria() {
+        login.validacionProductos();
     }
 
-    @And("hago clic en LOGIN")
-    public void hagoClicEn() {
-        login.ingresar();
+
+    @When("agrego {int} del siguiente producto {string}")
+    public void agregoUNIDADESDelSiguienteProducto(int unidades, String producto) {
+        login.seleccionarProducto(producto);
+        login.agregaUnidades(unidades);
+        login.añadiralCarrito();
     }
 
-    @And("valido el login OK")
-    public void validoElLoginOK() {
-        login.validacionLogin();
+    @Then("valido el carrito de compra actualice correctamente")
+    public void validoElCarritoDeCompraActualiceCorrectamente() {
+        login.clickcarrito();
+        login.validocarrito();
     }
 }

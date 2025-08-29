@@ -6,63 +6,58 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.appium.java_client.MobileBy;
 
 import java.util.List;
 
 public class SauceLoginScreen extends PageObject {
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[@content-desc=\"test-Username\"]")
-    private WebElement txtUsuario;
+    @AndroidFindBy(xpath = "//androidx.recyclerview.widget.RecyclerView[@resource-id='com.saucelabs.mydemoapp.android:id/productRV']/android.view.ViewGroup")
+    private List<WebElement> listaProductos;
 
-    @AndroidFindBy(xpath = "(//android.widget.EditText)[2]")
-    private WebElement txtPassword;
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Increase item quantity\"]")
+    private WebElement btnmas;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]")
-    private WebElement btnLogin;
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc=\"Tap to add product to cart\"]")
+    private WebElement btnaddtocart;
 
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Cart drop zone\"]/android.view.ViewGroup/android.widget.TextView")
-    private WebElement tituloApp;
-
-    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Item\"]")
-    private List<WebElement> lista2;
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Displays number of items in your cart\"]")
+    private WebElement btncart;
 
 
-    public void ingresarUsuario(String texto){
+    //prueba automation web
+    public int getCountProductos(){
+        return listaProductos.size();
+    }
+
+    public void clickProducto(String producto) {
+        WebElement product = getDriver().findElement(By.xpath("//android.widget.ImageView[@content-desc=\""+producto+"\"]"));
+        product.click();
+    }
+
+    public void agregarUnidades(int unidades) {
+
+        //se debe realizar un scroll porque no es visible por defecto
+        getDriver().findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true))" + ".scrollIntoView(new UiSelector().description(\"Increase item quantity\"))"));
+
+        for (int i = 1; i < unidades; i++) {
+            btnmas.click();
+        }
+    }
+
+    public void añadirAlCarrito() {
+        btnaddtocart.click();
+    }
+
+
+    public void clickcarrito() {
+        btncart.click();
+    }
+
+
+    public void validocarrito() {
         WebDriverWait wait = new WebDriverWait(getDriver(), 10);
-        wait.until(ExpectedConditions.elementToBeClickable(txtUsuario));
-
-        waitFor(ExpectedConditions.elementToBeClickable(txtUsuario));
-
-
-        txtUsuario.sendKeys(texto);
-    }
-
-    public void esperarElemento(WebElement elemento){
-        waitFor(ExpectedConditions.elementToBeClickable(elemento));
-    }
-
-    public void ingresarClave(String arg0) {
-        txtPassword.sendKeys(arg0);
-    }
-
-    public void ingresar() {
-        btnLogin.click();
-    }
-    public int getCountElements(){
-        //List<WebElement> lista = getDriver().findElements(By.xpath("//android.view.ViewGroup[@content-desc=\"test-Item\"]"));
-        return lista2.size();
-    }
-
-//
-    public String getTitulo() {
-        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.view.ViewGroup[@content-desc=\"test-Cart drop zone\"]/android.view.ViewGroup/android.widget.TextView")));
-
-        //WebElement titulo2 = getDriver().findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"test-Cart drop zone\"]/android.view.ViewGroup/android.widget.TextView"));
-
-        //return titulo2.getText();
-        return tituloApp.getText();
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//androidx.recyclerview.widget.RecyclerView[@content-desc=\"Displays list of selected products\"]")));
 
     }
 }

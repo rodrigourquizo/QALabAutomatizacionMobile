@@ -7,23 +7,30 @@ import org.junit.Assert;
 public class SuaceLabsLoginSteps {
     SauceLoginScreen login;
 
+    //Prueba automation web
+    public void validacionProductos() {
+        Assert.assertEquals(4, login.getCountProductos());
+    }
 
-    public void ingresoElUsuario(String usuario) {
-        login.ingresarUsuario(usuario);
+    public void seleccionarProducto(String producto) {
+        login.clickProducto(producto);
+    }
+
+    public void agregaUnidades(int unidades) {
+        login.agregarUnidades(unidades);
 
     }
 
-    public void ingresarClave(String arg0) {
-        login.ingresarClave(arg0);
+    public void añadiralCarrito() {
+        login.añadirAlCarrito();
     }
 
-    public void ingresar() {
-        login.ingresar();
+
+    public void clickcarrito() {
+        login.clickcarrito();
     }
 
-    public void validacionLogin() {
-        Assert.assertEquals("PRODUCTS",login.getTitulo() );
-        Assert.assertTrue(login.getCountElements()>1);
-
+    public void validocarrito() {
+        login.validocarrito();
     }
 }
