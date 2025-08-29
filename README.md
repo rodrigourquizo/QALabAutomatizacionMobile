@@ -1,2 +1,2 @@
 # QAInnovationLab
-main -> Evaluacion Automatizacion Web
+main -> Evaluacion Automatizacion Mobile
